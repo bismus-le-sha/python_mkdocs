@@ -1,13 +1,32 @@
 # Welcome to MkDocs
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+This site shows the capabilities of **MkDocs** with **Material** and **GitHub Pages** for publishing documentation.
 
-## Commands
+## Quick start
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+### 1. Create a new project:
+
+```bash
+mkdocs new [directory_name]
+```
+
+or create in exist project
+
+```bash
+mkdocs new ./
+```
+
+### 2. Start the live-reloading docs server:
+
+```bash
+mkdocs serve
+```
+
+### 3. Build the documentation site:
+
+```bash
+mkdocs build
+```
 
 ## Project layout
 
@@ -15,3 +34,9 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
     docs/
         index.md  # The documentation homepage.
         ...       # Other markdown pages, images and other files.
+
+Useful links
+
+- [Official documentation MkDocs](https://www.mkdocs.org)
+- [Material theme](https://squidfunk.github.io/mkdocs-material/)
+- [Github pages deploy action](https://github.com/JamesIves/github-pages-deploy-action)

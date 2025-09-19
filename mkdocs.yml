@@ -1,3 +1,36 @@
-site_name: My Docs
+site_name: Sample of MkDocs Material Documentation
+site_url: https://bismus-le-sha.github.io/python_mkdocs/
 
-theme: readthedocs
+theme:
+  name: material
+  language: en
+
+  font:
+    text: Roboto
+    code: Fira Code
+
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Light mode
+      primary: indigo
+      accent: pink
+
+    - scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Dark mode
+      primary: teal
+      accent: lime
+
+  features:
+    - search.suggest
+
+plugins:
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/bismus-le-sha
