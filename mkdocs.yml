@@ -30,6 +30,10 @@ theme:
 plugins:
   - search
 
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+
 extra:
   social:
     - icon: fontawesome/brands/github
