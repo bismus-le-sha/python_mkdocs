@@ -46,5 +46,4 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages # в эту ветку будет деплой
           folder: site
