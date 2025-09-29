@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main # ветка, из которой деплой
+      - master # ветка, из которой деплой
 
 permissions:
   contents: write
