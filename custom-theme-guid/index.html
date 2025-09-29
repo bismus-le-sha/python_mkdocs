@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Custom Theme – Sample of MkDocs Material Documentation
+    </title>
+    <meta name="description" content="None" />
+    <meta name="author" content="Alexey Bismus" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/index.css" />
+  </head>
+  <body class="bg-gray-50 font-atkinson">
+    <!-- Header -->
+    <header class="bg-klein text-white p-4 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">Sample of MkDocs Material Documentation</h1>
+        <nav class="flex space-x-6">
+          
+          <a
+            href=".."
+            class="px-2 py-1 rounded hover:bg-klein-500 hover:text-white "
+          >
+            Home
+          </a>
+          
+          <a
+            href="../getting-started/"
+            class="px-2 py-1 rounded hover:bg-klein-500 hover:text-white "
+          >
+            Getting Started
+          </a>
+          
+          <a
+            href="./"
+            class="px-2 py-1 rounded hover:bg-klein-500 hover:text-white bg-blue-600 text-white"
+          >
+            Custom Theme
+          </a>
+          
+        </nav>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="container mx-auto p-6">
+      <article class="prose prose-lg prose-klein max-w-none font-atkinson">
+        <h1 id="custom-theme-step-by-step-manual">Custom theme step-by-step manual</h1>
+<h3 id="1-node-">1. Установка Node-зависимостей</h3>
+<p>Утсановим <code>Tailwindcss</code> третьей версии, чтобы избежать багов новой, четвертой.</p>
+<pre><code class="language-bash">npm init -y
+npm install -D tailwindcss@3 postcss postcss-cli autoprefixer cssnano cross-env @tailwindcss/typography
+</code></pre>
+<h3 id="2-tailwindcss">2. Инициализация Tailwindcss</h3>
+<pre><code class="language-bash">npx tailwindcss init
+</code></pre>
+<h3 id="3-mkdocs">3. Структура проекта MkDocs</h3>
+<pre><code class="language-csharp">project-root/
+ ├─ docs/                  # markdown: index.md, about.md ...
+ ├─ theme/                 # кастомная тема (шаблоны + css + js)
+ │   ├─ main.html          # точка входа в нашу кастомную тему (расширяет base.html), обязательно назвать &quot;main&quot;
+ │   ├─ css/
+ │   │   └─ tailwind.css   # входной файл
+ │   └─ js/
+ │       └─ custom.js
+ ├─ mkdocs.yml
+ ├─ package.json
+ ├─ tailwind.config.js     # создается автоматически после инициализации tailwindcss
+ └─ postcss.config.js
+</code></pre>
+<h3 id="4-tailwind-postcss">4. Настройка Tailwind / PostCSS</h3>
+<p>theme/css/tailwind.css (входной)</p>
+<pre><code class="language-bash">@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</code></pre>
+<p>tailwind.config.js</p>
+<pre><code class="language-bash">/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    &quot;./docs/**/*.md&quot;,
+    &quot;./theme/**/*.html&quot;,
+    &quot;./theme/js/**/*.js&quot;
+  ],
+  theme: {
+    extend: {},
+  plugins: [require(&quot;@tailwindcss/typography&quot;)],
+};
+</code></pre>
+<p>postcss.config.js</p>
+<pre><code class="language-bash">module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+    ...(process.env.NODE_ENV === 'production' ? { cssnano: { preset: 'default' } } : {})
+  }
+};
+</code></pre>
+<h3 id="5-packagejson">5. Скрипты сборки (package.json)</h3>
+<pre><code class="language-bash">  &quot;scripts&quot;: {
+    &quot;dev:css&quot;: &quot;postcss theme/css/tailwind.css --output theme/css/index.css&quot;,
+    &quot;build:css&quot;: &quot;cross-env NODE_ENV=production postcss theme/css/tailwind.css -o theme/css/index.css&quot;,
+    &quot;serve&quot;: &quot;python -m mkdocs serve&quot;,
+    &quot;build:site&quot;: &quot;python -m mkdocs build&quot;
+  },
+</code></pre>
+<h3 id="6-mkdocsyml">6. Настройка mkdocs.yml</h3>
+<p>Путь css/index.css — относительный к theme/ (MkDocs копирует theme в итоговую сборку).</p>
+<pre><code class="language-bash">site_name: My Site
+site_description: &quot;...&quot;
+site_author: &quot;Имя&quot;
+
+theme:
+  name: null
+  custom_dir: theme
+
+extra_css:
+  - css/index.css           # путь относительно дирректории theme
+extra_javascript:
+  - js/custom.js            # путь относительно дирректории theme
+
+nav:
+  - Home: index.md
+  - About: about.md
+
+plugins:
+  - search
+</code></pre>
+<h3 id="7-jinja2-mainhtml">7. Шаблоны Jinja2 - main.html</h3>
+<pre><code class="language-bash">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ru&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;
+      {% if page.title %}{{ page.title }} – {% endif %}{{ config.site_name }}
+    &lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;{{ config.site_description }}&quot; /&gt;
+    &lt;meta name=&quot;author&quot; content=&quot;{{ config.site_author }}&quot; /&gt;
+    &lt;link
+      href=&quot;https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap&quot;
+      rel=&quot;stylesheet&quot;
+    /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;{{ base_url }}/css/index.css&quot; /&gt;
+  &lt;/head&gt;
+  &lt;body class=&quot;bg-gray-50 font-atkinson&quot;&gt;
+    &lt;!-- Header --&gt;
+    &lt;header class=&quot;bg-klein text-white p-4 shadow-md&quot;&gt;
+      &lt;div class=&quot;container mx-auto flex justify-between items-center&quot;&gt;
+        &lt;h1 class=&quot;text-xl font-bold&quot;&gt;{{ config.site_name }}&lt;/h1&gt;
+        &lt;nav class=&quot;flex space-x-6&quot;&gt;
+          {% for nav_item in nav %}
+          &lt;a
+            href=&quot;{{ nav_item.url | url }}&quot;
+            class=&quot;px-2 py-1 rounded hover:bg-klein-500 hover:text-white {% if nav_item.active %}bg-blue-600 text-white{% endif %}&quot;
+          &gt;
+            {{ nav_item.title }}
+          &lt;/a&gt;
+          {% endfor %}
+        &lt;/nav&gt;
+      &lt;/div&gt;
+    &lt;/header&gt;
+
+    &lt;!-- Content --&gt;
+    &lt;main class=&quot;container mx-auto p-6&quot;&gt;
+      &lt;article class=&quot;prose prose-lg prose-klein max-w-none font-atkinson&quot;&gt;
+        {{ page.content }}
+      &lt;/article&gt;
+    &lt;/main&gt;
+
+    &lt;!-- Footer --&gt;
+    &lt;footer class=&quot;bg-klein text-gray-200 p-4 mt-10 font-atkinson&quot;&gt;
+      &lt;div class=&quot;container mx-auto text-center&quot;&gt;
+        &lt;p&gt;© {{ config.site_author }}, {{ build_date }}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/footer&gt;
+
+    &lt;script src=&quot;{{ base_url }}/js/custom.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Используем в шаблоне класс prose-klein (см. ниже):</p>
+<pre><code class="language-bash">&lt;article class=&quot;prose prose-lg prose-klein max-w-none font-atkinson text-klein&quot;&gt;
+  {{ content }}
+&lt;/article&gt;
+</code></pre>
+<h3 id="8-klein">8. Типографика, код и цвет klein</h3>
+<p>Добавим в tailwind.config.js кастомную тему klein внутри typography а также шрифт Atkinson Hyperlegible</p>
+<pre><code class="language-bash">/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    &quot;./docs/**/*.md&quot;,
+    &quot;./theme/*.html&quot;,
+    // &quot;./theme/**/*.html&quot;,
+    &quot;./theme/js/**/*.js&quot;,
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        atkinson: ['&quot;Atkinson Hyperlegible&quot;', &quot;monospace&quot;],
+      },
+      typography: ({ theme }) =&gt; ({
+        klein: {
+          css: {
+            &quot;--tw-prose-body&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-headings&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-lead&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-links&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-bold&quot;: theme(&quot;colors.klein-bold&quot;),
+            &quot;--tw-prose-counters&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-bullets&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-hr&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-quotes&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-quote-borders&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-captions&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-code&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-pre-code&quot;: theme(&quot;colors.gray.100&quot;),
+            &quot;--tw-prose-pre-bg&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-th-borders&quot;: theme(&quot;colors.klein&quot;),
+            &quot;--tw-prose-td-borders&quot;: theme(&quot;colors.klein&quot;),
+          },
+        },
+      }),
+      colors: {
+        klein: &quot;#002fa7&quot;,
+        klein_bold: &quot;#002074&quot;,
+      },
+    },
+  },
+  plugins: [require(&quot;@tailwindcss/typography&quot;)],
+};
+</code></pre>
+<p>Переменные --tw-prose-pre-bg и --tw-prose-pre-code управляют фоном тега "pre" и текстом внутри блока кода соответственно.</p>
+<h3 id="9">9. Примеры дополнительных настроек</h3>
+<p>Изменить цвет выделения текста: можно через Tailwind класс selection или прямым CSS. Делается это в входном файле стилей tailwind.css:</p>
+<pre><code class="language-bash">::selection {
+  background-color: #002074;
+  color: #ffffff;
+}
+</code></pre>
+<h3 id="10">10. Проверка локально</h3>
+<pre><code class="language-bash"># собрать css
+npm run dev:css
+
+# запустить mkdocs (в активированном virtualenv)
+npm run serve   # это выполняет `python -m mkdocs serve`
+</code></pre>
+<h3 id="11-github-pages">11. Деплой в GitHub Pages</h3>
+<p>Добавим в наш экшн установку Node.js для Tailwind/PostCSS и билд css</p>
+<pre><code class="language-bash">      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build CSS
+        run: npm run build:css
+</code></pre>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-klein text-gray-200 p-4 mt-10 font-atkinson">
+      <div class="container mx-auto text-center">
+        <p>© Alexey Bismus, </p>
+      </div>
+    </footer>
+
+    <script src="../js/custom.js"></script>
+  </body>
+</html>

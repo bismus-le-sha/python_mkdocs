@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Getting Started – Sample of MkDocs Material Documentation
+    </title>
+    <meta name="description" content="None" />
+    <meta name="author" content="Alexey Bismus" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/index.css" />
+  </head>
+  <body class="bg-gray-50 font-atkinson">
+    <!-- Header -->
+    <header class="bg-klein text-white p-4 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">Sample of MkDocs Material Documentation</h1>
+        <nav class="flex space-x-6">
+          
+          <a
+            href=".."
+            class="px-2 py-1 rounded hover:bg-klein-500 hover:text-white "
+          >
+            Home
+          </a>
+          
+          <a
+            href="./"
+            class="px-2 py-1 rounded hover:bg-klein-500 hover:text-white bg-blue-600 text-white"
+          >
+            Getting Started
+          </a>
+          
+          <a
+            href="../custom-theme-guid/"
+            class="px-2 py-1 rounded hover:bg-klein-500 hover:text-white "
+          >
+            Custom Theme
+          </a>
+          
+        </nav>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="container mx-auto p-6">
+      <article class="prose prose-lg prose-klein max-w-none font-atkinson">
+        <h1 id="getting-started-step-by-step-manual">Getting started step-by-step manual</h1>
+<h3 id="1-python">1. Установка Python и проверка инструментов</h3>
+<pre><code class="language-bash">python --version
+pip --version
+pip3 --version
+</code></pre>
+<p>Проверить наличие <code>virtualenv</code>:</p>
+<pre><code class="language-bash">virtualenv --version
+</code></pre>
+<h3 id="2-virtualenv">2. Установка virtualenv (если нет)</h3>
+<pre><code class="language-bash">python -m pip install --user virtualenv
+</code></pre>
+<h3 id="3">3. Создание проекта и окружения</h3>
+<pre><code class="language-bash">mkdir mydocs
+cd mydocs
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
+</code></pre>
+<h3 id="4-mkdocs">4. Установка mkdocs</h3>
+<pre><code class="language-bash">pip install mkdocs
+</code></pre>
+<h3 id="5">5. Инициализация документации</h3>
+<pre><code class="language-bash">mkdocs new .
+mkdocs serve
+</code></pre>
+<h3 id="6-push">6. Push в репозиторий</h3>
+<pre><code class="language-bash">git init
+git add .
+git commit -m &quot;init mkdocs project&quot;
+git remote add origin &lt;repo_url&gt;
+git push origin main
+</code></pre>
+<h3 id="7-github-actions">7. Настройка GitHub Actions</h3>
+<ul>
+<li>
+<p>Создать файл .github/workflows/deploy.yml</p>
+</li>
+<li>
+<p>Добавить job для сборки и деплоя (использовать JamesIves/github-pages-deploy-action, он очень удобный).</p>
+</li>
+</ul>
+<h3 id="8-github-pages">8. Деплой в GitHub Pages</h3>
+<ul>
+<li>
+<p>В настройках репозитория включить GitHub Pages.</p>
+</li>
+<li>
+<p>Указать ветку gh-pages (или /docs).</p>
+</li>
+</ul>
+<h3 id="9">9. Проверка</h3>
+<p>Перейти по адресу:</p>
+<pre><code class="language-bash">https://&lt;username&gt;.github.io/&lt;repo_name&gt;/
+</code></pre>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-klein text-gray-200 p-4 mt-10 font-atkinson">
+      <div class="container mx-auto text-center">
+        <p>© Alexey Bismus, </p>
+      </div>
+    </footer>
+
+    <script src="../js/custom.js"></script>
+  </body>
+</html>
