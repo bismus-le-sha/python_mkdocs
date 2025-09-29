@@ -1,4 +1,4 @@
-# Step-by-step manual
+# Getting started step-by-step manual
 
 ### 1. Установка Python и проверка инструментов
 

@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+pre {
+  background-color: #e6eaff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+::selection {
+  background-color: #002074;
+  color: #ffffff;
+}

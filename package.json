@@ -1,0 +1,36 @@
+{
+  "name": "py-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev:css": "postcss theme/css/tailwind.css --output theme/css/index.css",
+    "build:css": "cross-env NODE_ENV=production postcss theme/css/tailwind.css -o theme/css/index.css",
+    "serve": "python -m mkdocs serve",
+    "build:site": "python -m mkdocs build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bismus-le-sha/python_mkdocs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bismus-le-sha/python_mkdocs/issues"
+  },
+  "homepage": "https://github.com/bismus-le-sha/python_mkdocs#readme",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "autoprefixer": "^10.4.21",
+    "cross-env": "^10.0.0",
+    "cssnano": "^7.1.1",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^3.4.17"
+  }
+}

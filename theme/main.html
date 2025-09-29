@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      {% if page.title %}{{ page.title }} – {% endif %}{{ config.site_name }}
+    </title>
+    <meta name="description" content="{{ config.site_description }}" />
+    <meta name="author" content="{{ config.site_author }}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ base_url }}/css/index.css" />
+  </head>
+  <body class="bg-gray-50 font-atkinson">
+    <!-- Header -->
+    <header class="bg-klein text-white p-4 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">{{ config.site_name }}</h1>
+        <nav class="flex space-x-6">
+          {% for nav_item in nav %}
+          <a
+            href="{{ nav_item.url | url }}"
+            class="px-2 py-1 rounded hover:bg-klein-500 hover:text-white {% if nav_item.active %}bg-blue-600 text-white{% endif %}"
+          >
+            {{ nav_item.title }}
+          </a>
+          {% endfor %}
+        </nav>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="container mx-auto p-6">
+      <article class="prose prose-lg prose-klein max-w-none font-atkinson">
+        {{ page.content }}
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-klein text-gray-200 p-4 mt-10 font-atkinson">
+      <div class="container mx-auto text-center">
+        <p>© {{ config.site_author }}, {{ build_date }}</p>
+      </div>
+    </footer>
+
+    <script src="{{ base_url }}/js/custom.js"></script>
+  </body>
+</html>

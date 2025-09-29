@@ -1,9 +1,13 @@
 site_name: Sample of MkDocs Material Documentation
 site_url: https://bismus-le-sha.github.io/python_mkdocs/
+site_author: Alexey Bismus
 
+# theme:
+#   name: material
+#   language: en
 theme:
-  name: material
-  language: en
+  name: null
+  custom_dir: theme
 
   font:
     text: Roboto
@@ -33,8 +37,13 @@ plugins:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - Custom Theme: custom-theme-guid.md
 
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/bismus-le-sha
+extra_css:
+  - css/index.css
+extra_javascript:
+  - js/custom.js

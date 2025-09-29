@@ -1,0 +1,3 @@
+# Tailwind build artifacts
+node_modules/
+theme/css/index.css

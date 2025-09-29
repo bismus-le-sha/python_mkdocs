@@ -2,6 +2,8 @@ name: Build and Deploy
 
 on:
   push:
+    branches:
+      - main # указать свою ветку, если деплой с другой
 
 permissions:
   contents: write
@@ -15,18 +17,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Python Setup
+      # Устанавливаем Node.js для Tailwind/PostCSS
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build CSS
+        run: npm run build:css
+
+      # Устанавливаем Python + MkDocs
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.12
+          python-version: "3.12"
 
-      - name: Install dependencies
-        run: pip install mkdocs mkdocs-material
+      - name: Install Python dependencies
+        run: pip install mkdocs
 
-      - name: Build
-        run: mkdocs build
+      # Собираем сайт MkDocs
+      - name: Build site
+        run: mkdocs build --strict
 
-      - name: Deploy
+      # Деплой в GitHub Pages
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
+          branch: gh-pages # в эту ветку будет деплой
           folder: site

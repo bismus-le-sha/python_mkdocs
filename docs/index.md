@@ -1,6 +1,4 @@
-# Welcome to MkDocs
-
-This site shows the capabilities of **MkDocs** with **Material** and **GitHub Pages** for publishing documentation.
+# Welcome to MkDocs with custom theme Blueprint
 
 ## Quick start
 
