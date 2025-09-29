@@ -3,47 +3,55 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main # указать свою ветку, если деплой с другой
+      - main # ветка, из которой деплой
 
 permissions:
   contents: write
 
 jobs:
   build:
-    name: Build and Deploy
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      # 1. Получаем код
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Устанавливаем Node.js для Tailwind/PostCSS
+      # 2. Устанавливаем Node.js (для Tailwind/PostCSS)
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
+      # 3. Устанавливаем Node зависимости
       - name: Install Node dependencies
         run: npm ci
 
-      - name: Build CSS
+      # 4. Собираем CSS
+      - name: Build Tailwind CSS
         run: npm run build:css
 
-      # Устанавливаем Python + MkDocs
+      # 5. Устанавливаем Python (для MkDocs)
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.12"
 
+      # 6. Устанавливаем Python зависимости
       - name: Install Python dependencies
-        run: pip install mkdocs
+        run: pip install mkdocs mkdocs-material
 
-      # Собираем сайт MkDocs
-      - name: Build site
+      # 7. Собираем сайт MkDocs
+      - name: Build MkDocs site
         run: mkdocs build --strict
 
-      # Деплой в GitHub Pages
+      # 8. Проверка содержимого site/ (опционально)
+      - name: List site contents
+        run: ls -R site/
+
+      # 9. Деплой на GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
+          branch: gh-pages
           folder: site
