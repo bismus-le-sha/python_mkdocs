@@ -41,7 +41,12 @@
     <!-- Footer -->
     <footer class="bg-klein text-gray-200 p-4 mt-10 font-atkinson">
       <div class="container mx-auto text-center">
-        <p>© {{ config.site_author }}, {{ build_date }}</p>
+        <p>
+          © {{ config.site_author }},
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+        </p>
       </div>
     </footer>
 
