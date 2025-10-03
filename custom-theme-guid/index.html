@@ -266,7 +266,12 @@ npm run serve   # это выполняет `python -m mkdocs serve`
     <!-- Footer -->
     <footer class="bg-klein text-gray-200 p-4 mt-10 font-atkinson">
       <div class="container mx-auto text-center">
-        <p>© Alexey Bismus, </p>
+        <p>
+          © Alexey Bismus,
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+        </p>
       </div>
     </footer>
 
